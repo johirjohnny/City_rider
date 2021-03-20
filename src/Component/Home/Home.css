@@ -1,0 +1,13 @@
+  
+.header{
+    
+    height: 600px;
+    
+    background-size: 100% 100%;
+   
+   
+    justify-content: space-between;
+}
+.transportImg{
+    width: 60px;
+}

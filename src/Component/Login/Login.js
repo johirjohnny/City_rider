@@ -1,11 +1,17 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import firebaseConfig from "./firebase.config"
 import firebase from "firebase/app";
 import "firebase/auth";
 import './Login.css'
+import { UserContext } from '../../App'
+import { useHistory, useLocation } from 'react-router';
 
 const Login = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const history = useHistory();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     } else {
@@ -34,7 +40,10 @@ const Login = () => {
                 /** @type {firebase.auth.OAuthCredential} */
                 var credential = result.credential;
                 var token = credential.accessToken;
-                var user = result.user;
+                var { displayName } = result.user;
+                const signedInUser = { name: displayName }
+                setLoggedInUser(signedInUser);
+                history.replace(from);
             }).catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -63,11 +72,14 @@ const Login = () => {
         if (newUser && user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
                 .then((userCredential) => {
-
                     const newUserInfo = { ...user };
                     newUserInfo.error = '';
                     newUserInfo.success = true;
                     setUser(newUserInfo);
+                    var { displayName } = userCredential.user;
+                    const signedInUser = { name: displayName }
+                    setLoggedInUser(signedInUser);
+                    history.replace(from);
                     // ...
                 })
                 .catch((error) => {
@@ -85,6 +97,10 @@ const Login = () => {
                     newUserInfo.error = '';
                     newUserInfo.success = true;
                     setUser(newUserInfo);
+                    var { displayName } = userCredential.user;
+                    const signedInUser = { name: displayName }
+                    setLoggedInUser(signedInUser);
+                    history.replace(from);
                 })
                 .catch((error) => {
                     const newUserInfo = { ...user };
@@ -100,8 +116,8 @@ const Login = () => {
 
     return (
         <div className="loginHeader">
-            <h1>Create an account</h1>
-            <input type = "checkbox" onChange= {()=>setNewUser(!newUser)} name = "newUser"></input>
+            <h1>{newUser ? 'Create an account' : 'Sign in to your account'}</h1>
+            <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser"></input>
             <label htmlFor="newUser">New User Sign up</label>
             <form onSubmit={handleSubmit}>
                 {newUser && <TextField name="name" onChange={handleChange} id="standard-basic" label="Name" />}
@@ -110,7 +126,7 @@ const Login = () => {
                 <br />
                 <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Password" required />
                 <br />
-                <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Confirm Password" />
+                {newUser && <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Confirm Password" />}
                 <br /> <br />
                 <Button type="submit" variant="contained" color="primary" value=""> {newUser ? 'Create your account' : 'Log In'}</Button>
             </form>
