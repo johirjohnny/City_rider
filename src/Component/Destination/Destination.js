@@ -1,45 +1,79 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import FakeData from '../FakeData/FakeData'
 
 
 
 const Destination = () => {
+    const [transport, setTransport] = useState([]);
     const [search, setSearch] = useState('');
-    const { transportType} = useParams();
-    const handleChange = () => {
-        const transportSearch = '' ;
-        if ({transportType} === 'Car'){ 
-            transportSearch = "Car Car";
-        }
-        if ({transportType} === 'Bike'){ 
-            transportSearch = "Bike Bike";
-        }
-        if ({transportType} === 'Bus'){ 
-            transportSearch = "Bus Bus";
-        }
-        if (transportType){
-            setSearch (search)
-        }
+    const [show, setShow] = useState(false);
+    const [destination, setDestination] = useState({
+        from: '',
+        to: ''
+    });
+    const { transportType } = useParams();
+    useEffect(() => {
+        setTransport(FakeData);
+    }, [])
+    const selectedTransport = transport.find(trans => trans.transportType === transportType);
+    console.log(selectedTransport);
+    const handleSubmit = (e) => {
+        setShow(true);
+        e.preventDefault();
+    }
+    const handleChange = (e) => {
+        const newDestination = { ...destination };
+        newDestination[e.target.name] = e.target.value;
+        //console.log(newUserInfo);
+        setDestination(newDestination);
+
     }
 
     return (
         <div>
             <h1>This is {transportType}</h1>
-            <form >
-                <TextField name="text" onChange={handleChange} id="standard-basic" label="From" />
-                <br />
-                <TextField name="text" onChange={handleChange} id="standard-basic" label="To" />
-                <br />
-                <br/> 
-                <Button type="submit" variant="contained" color="primary" value=""> Search </Button>
-            </form>
+            {
+                show && (
+                    <div>
+                        <div>
+                            <h2>
+                                {
+                                    destination.from 
+                                }
+                            </h2>
+                            <h2>
+                                {
+                                    destination.to
+                                }
+                            </h2>
+                        </div>
+                        <h1>
+                            {selectedTransport.transportType}
+                        </h1>
+                    </div>
+                )
+            }
+            {
+                !show && (
+                    <form >
+                        <TextField name="from" onChange={handleChange} id="standard-basic" label="From" />
+                        <br />
+                        <TextField name="to" onChange={handleChange} id="standard-basic" label="To" />
+                        <br />
+                        <br />
+                        <Button onClick={handleSubmit} name={transportType} variant="contained" color="primary" > Search </Button>
+                    </form>
+                )
+            }
+
 
             <div>
                 <h3>{search} </h3>
             </div>
         </div>
-        
+
     );
 };
 
