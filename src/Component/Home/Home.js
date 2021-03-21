@@ -53,8 +53,6 @@ const Home = () => {
             {
                 transport.map(transport => <TransportType key={transport.id} transport={transport}></TransportType>)
             }
-           
-
             
         </div>
     );

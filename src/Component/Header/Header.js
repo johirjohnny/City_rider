@@ -27,9 +27,7 @@ const Header = () => {
     const classes = useStyles();
 
     return (
-        <div >
-
-
+        <div>
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar className="navbar">
