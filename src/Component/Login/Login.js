@@ -140,27 +140,30 @@ const Login = () => {
 
 
     return (
-        <div className="loginHeader">
-            <h1>{newUser ? 'Create an account' : 'Sign in to your account'}</h1>
-            <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser"></input>
-            <label htmlFor="newUser">New User Sign up</label>
-            <form onSubmit={handleSubmit}>
-                {newUser && <TextField name="name" onChange={handleChange} id="standard-basic" label="Name" />}
-                <br />
-                <TextField name="email" onChange={handleChange} id="standard-basic" label="Email" required />
-                <br />
-                <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Password" required />
-                <br />
-                {newUser && <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Confirm Password" />}
-                <br /> <br />
-                <Button type="submit" variant="contained" color="primary" value=""> {newUser ? 'Create your account' : 'Log In'}</Button>
-            </form>
-            <p style={{ color: 'red' }}>{user.error}</p>
-            {user.success && <p style={{ color: 'green' }}>User {newUser ? 'Created' : 'Logged In'} Successfully  </p>}
-            <br /><br /><br />
-            <Button onClick={handleGoogleSingIN} variant="contained" color="primary" disableElevation>
-                Google Sign In
+        <div className="row">
+            <div className="col-md-4">
+                <h1>{newUser ? 'Create an account' : 'Sign in to your account'}</h1>
+                <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser"></input>
+                <label htmlFor="newUser">New User Sign up</label>
+                <form onSubmit={handleSubmit}>
+                    {newUser && <TextField name="name" onChange={handleChange} id="standard-basic" label="Name" />}
+                    <br />
+                    <TextField name="email" onChange={handleChange} id="standard-basic" label="Email" required />
+                    <br />
+                    <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Password" required />
+                    <br />
+                    {newUser && <TextField type="password" name="password" onChange={handleChange} id="standard-basic" label="Confirm Password" />}
+                    <br /> <br />
+                    <Button type="submit" variant="contained" color="primary" value=""> {newUser ? 'Create your account' : 'Log In'}</Button>
+                </form>
+                <p style={{ color: 'red' }}>{user.error}</p>
+                {user.success && <p style={{ color: 'green' }}>User {newUser ? 'Created' : 'Logged In'} Successfully  </p>}
+                <br /><br /><br />
+                <Button onClick={handleGoogleSingIN} variant="contained" color="primary" disableElevation>
+                    Google Sign In
             </Button>
+            </div>
+
         </div>
     );
 };
