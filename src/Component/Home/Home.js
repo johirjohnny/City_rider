@@ -49,10 +49,13 @@ const Home = () => {
 
     return (
         <div style={{ backgroundImage: `url(${Bg})` } } className="header  row d-flex justify-content-center align-item-center">
-
+            
             {
                 transport.map(transport => <TransportType key={transport.id} transport={transport}></TransportType>)
             }
+           
+
+            
         </div>
     );
 };

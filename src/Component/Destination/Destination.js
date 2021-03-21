@@ -37,61 +37,68 @@ const Destination = () => {
     }
 
     return (
-        <div>
-            <h1>This is {transportType}</h1>
-            {
-                show && (
+
+        <div  >
+            <div className="row align-items-center justify-content-center ">
+                <div className="col-md-4">
+                    <h1>This is {transportType}</h1>
+                    {
+                        show && (
+                            <div>
+                                <div>
+                                    <h2>
+                                        {
+                                            destination.from
+                                        }
+                                    </h2>
+                                    <h2>
+                                        {
+                                            destination.to
+                                        }
+                                    </h2>
+                                </div>
+                                <h1>
+                                    {selectedTransport.imgUrl}
+                                </h1>
+                            </div>
+                        )
+                    }
+                    {
+                        !show && (
+                            <form >
+                                <TextField name="from" onChange={handleChange} id="standard-basic" label="From" />
+                                <br />
+                                <TextField name="to" onChange={handleChange} id="standard-basic" label="To" />
+                                <br />
+                                <br />
+                                <Button onClick={handleSubmit} name={transportType} variant="contained" color="primary" > Search </Button>
+                            </form>
+                        )
+                    }
+
+
                     <div>
-                        <div>
-                            <h2>
-                                {
-                                    destination.from
-                                }
-                            </h2>
-                            <h2>
-                                {
-                                    destination.to
-                                }
-                            </h2>
-                        </div>
-                        <h1>
-                            {selectedTransport.transportType}
-                        </h1>
+                        <h3>{search} </h3>
                     </div>
-                )
-            }
-            {
-                !show && (
-                    <form >
-                        <TextField name="from" onChange={handleChange} id="standard-basic" label="From" />
-                        <br />
-                        <TextField name="to" onChange={handleChange} id="standard-basic" label="To" />
-                        <br />
-                        <br />
-                        <Button onClick={handleSubmit} name={transportType} variant="contained" color="primary" > Search </Button>
-                    </form>
-                )
-            }
 
+                    <div>
+                        <LoadScript
+                            googleMapsApiKey="AIzaSyBu-AKKZLxnJ9tOQkoADLkA0OlUExEfQck"
+                        >
+                            <GoogleMap
+                                mapContainerStyle={{ width: '300px', height: '300px' }}
+                                center={{ lat: -3.745, lng: -38.523 }}
+                                zoom={10}
+                            >
+                                { /* Child components, such as markers, info windows, etc. */}
+                                <></>
+                            </GoogleMap>
+                        </LoadScript>
+                    </div>
+                </div>
 
-            <div>
-                <h3>{search} </h3>
             </div>
 
-            <div>
-                <LoadScript
-                    googleMapsApiKey="AIzaSyBu-AKKZLxnJ9tOQkoADLkA0OlUExEfQck"
-                >
-                    <GoogleMap
-                        mapContainerStyle={{ width: '300px', height: '300px' }}
-                        center={{ lat: -3.745, lng: -38.523 }}
-                        zoom={10}
-                    >
-                        { /* Child components, such as markers, info windows, etc. */}
-                        <></>
-                    </GoogleMap>
-                </LoadScript>
-            </div>
         </div>
 
 
