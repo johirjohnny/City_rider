@@ -2,10 +2,15 @@ import { Button, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import FakeData from '../FakeData/FakeData'
-
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 
 const Destination = () => {
+
+
+
+
+
     const [transport, setTransport] = useState([]);
     const [search, setSearch] = useState('');
     const [show, setShow] = useState(false);
@@ -40,7 +45,7 @@ const Destination = () => {
                         <div>
                             <h2>
                                 {
-                                    destination.from 
+                                    destination.from
                                 }
                             </h2>
                             <h2>
@@ -72,7 +77,23 @@ const Destination = () => {
             <div>
                 <h3>{search} </h3>
             </div>
+
+            <div>
+                <LoadScript
+                    googleMapsApiKey="AIzaSyBu-AKKZLxnJ9tOQkoADLkA0OlUExEfQck"
+                >
+                    <GoogleMap
+                        mapContainerStyle={{ width: '300px', height: '300px' }}
+                        center={{ lat: -3.745, lng: -38.523 }}
+                        zoom={10}
+                    >
+                        { /* Child components, such as markers, info windows, etc. */}
+                        <></>
+                    </GoogleMap>
+                </LoadScript>
+            </div>
         </div>
+
 
     );
 };
